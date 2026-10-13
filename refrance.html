@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Field Notes: Full Stack, So Far</title>
+
+<!-- INTERNAL CSS: everything lives in this one file. In a real project it would sit in style.css and be linked with:
+     <link rel="stylesheet" href="style.css"> -->
+<style>
+/* ---------- Level 1-2: the basics (universal + tag selectors) ---------- */
+* { box-sizing: border-box; }
+body { margin: 0; background: #F6F8FB; color: #14213D; font-family: Arial, sans-serif; line-height: 1.5; }
+h1, h2, h3 { font-family: Georgia, serif; }
+a { color: #2F5BEA; }
+a:hover { color: #F2545B; }          /* Level 9 idea: pseudo-class */
+a:active { color: black; }
+
+/* ---------- Level 2: class + id selectors, color formats ---------- */
+.wrap { width: 90%; max-width: 900px; margin: 0 auto; }
+.highlight { color: #F2545B; }
+#special { color: #2F5BEA; }
+.c-keyword { background-color: yellow; }
+.c-hex { background-color: #2EC4B6; }
+.c-rgb { background-color: rgb(255, 210, 63); }
+
+/* ---------- Level 4: layout blocks for semantic tags ---------- */
+.level { padding: 40px 0; border-top: 2px solid #C9D3E6; }
+.tag { background: #14213D; color: white; padding: 2px 12px; border-radius: 20px; font-size: 14px; font-family: Arial, sans-serif; }
+.note { background: #E6ECF8; padding: 10px 14px; border-left: 4px solid #2F5BEA; font-size: 14px; }
+article { background: white; border: 1px solid #C9D3E6; padding: 14px; margin: 14px 0; }
+aside { background: #FFF6CC; border: 1px dashed #14213D; padding: 10px; }
+
+/* ---------- Level 5-6: media + forms ---------- */
+img { border: 3px solid #14213D; }
+iframe { border: 0; max-width: 100%; }
+input, select { padding: 8px; margin: 4px 0 12px; font-size: 15px; }
+button, input[type="submit"] { padding: 8px 16px; }
+
+/* ---------- Level 7: box model ---------- */
+.box { background: #E6ECF8; padding: 20px; border: 5px solid black; margin: 20px; }
+.pad-four { background: #E6ECF8; padding: 10px 40px 10px 5px; border: 2px solid #14213D; }
+.centered { width: 300px; margin: 0 auto; background: #2EC4B6; text-align: center; }
+.gap-a { margin-bottom: 30px; background: #FFD23F; }
+.gap-b { margin-top: 20px; background: #2EC4B6; }
+.cb, .bb { width: 300px; padding: 20px; border: 5px solid black; background: #E6ECF8; margin-bottom: 10px; }
+.cb { box-sizing: content-box; }
+.bb { box-sizing: border-box; }
+.demo-div { background: #FFD23F; }
+.demo-span { background: #2EC4B6; }
+.swapped-span { display: block; background: #F2545B; }
+.swapped-div { display: inline; background: #F2545B; }
+.gone { display: none; }
+
+/* ---------- Level 8: cascade + units ---------- */
+h5 { color: blue; font-size: 16px; margin: 6px 0; }                 /* tag */
+.battle { color: orange; }                                            /* class beats tag */
+#winner { color: teal !important; }                                   /* id + !important beats inline */
+.bar { background: #2F5BEA; color: white; padding: 6px; margin: 6px 0; }
+.u-px { width: 200px; }
+.u-pct { width: 50%; }
+.u-vw { width: 30vw; }
+.u-vh { height: 8vh; }
+
+/* ---------- Level 9: visuals + states ---------- */
+.shape { display: inline-block; width: 90px; height: 90px; background: #F2545B; margin-right: 10px; }
+.r20 { border-radius: 20px; }
+.r50 { border-radius: 50%; }
+.photo { height: 160px; padding: 14px; color: white; background-image: linear-gradient(135deg, #2F5BEA, #2EC4B6); background-size: cover; background-position: center; }
+.stripes { background: #FFD23F; padding: 10px; }
+.dark { background: black; color: white; padding: 14px; margin-bottom: 8px; }
+.faded { opacity: 0.5; }
+.see-through { background-color: rgba(0, 0, 0, 0.5); }
+.press { margin: 20px; background: #2F5BEA; color: white; border: 0; border-radius: 8px; padding: 12px 22px; font-size: 16px; cursor: pointer; }
+.press:hover { background: #14213D; scale: 1.25; }
+.press:active { background: black; scale: 0.75; }
+
+/* ---------- Level 10: position ---------- */
+.shifted { position: relative; top: 10px; left: 30px; background: #FFD23F; padding: 8px; width: 220px; }
+.stage { position: relative; height: 200px; background: #E6ECF8; border: 1px solid #14213D; margin-top: 24px; }
+.pa, .pb { position: absolute; width: 100px; height: 100px; }
+.pa { top: 20px; left: 20px; background: #2EC4B6; }
+.pb { top: 60px; left: 60px; background: #F2545B; z-index: 1; }
+.to-top { position: fixed; right: 16px; bottom: 16px; background: #14213D; color: white; padding: 8px 14px; border-radius: 20px; text-decoration: none; }
+.to-top:hover { color: #FFD23F; }
+
+/* ---------- Level 11: flexbox ---------- */
+.flex { display: flex; background: #E6ECF8; padding: 8px; margin-bottom: 10px; }
+.item { background: #2F5BEA; color: white; padding: 10px 18px; margin: 4px; }
+.jc-center { justify-content: center; }
+.jc-between { justify-content: space-between; }
+.jc-around { justify-content: space-around; }
+.tall { height: 160px; align-items: center; }
+.column { flex-direction: column; align-items: center; justify-content: center; height: 220px; }
+.center-all { height: 180px; justify-content: center; align-items: center; }
+
+/* ---------- Level 12: nth-child, responsive ---------- */
+.n:nth-child(3), .n:nth-child(5) { color: #F2545B; }
+.n:nth-child(even) { font-weight: bold; }
+.t:nth-child(3) { color: green; }
+.t:nth-of-type(2) { background: #FFD23F; }
+.only-wide { display: block; }
+.only-narrow { display: none; }
+
+/* ---------- Level 13: everything together (mini shop) ---------- */
+.shop { border: 1px solid #14213D; background: white; margin-top: 16px; }
+.shop-nav { display: flex; justify-content: space-between; align-items: center; background: #14213D; color: white; padding: 14px 20px; }
+.shop-nav a { color: white; margin-left: 14px; }
+.shop-hero { position: relative; height: 220px; background-image: linear-gradient(135deg, #8A6A55, #3E2C41); background-size: cover; background-position: center; }
+.overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.4); }
+.hero-content { position: relative; display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100%; color: white; text-align: center; padding: 0 16px; }
+.cta { background: #FFD23F; color: #14213D; padding: 8px 20px; border-radius: 20px; text-decoration: none; }
+.products { display: flex; justify-content: center; padding: 24px 10px; background: #F6F8FB; }
+.card { position: relative; width: 200px; border: 1px solid #C9D3E6; border-radius: 14px; overflow: hidden; background: white; margin: 0 8px; }
+.card-img { height: 90px; }
+.card-body { padding: 12px; }
+.badge { position: absolute; top: 10px; left: 10px; background: rgba(200, 30, 30, 0.85); color: white; padding: 4px 10px; border-radius: 20px; font-size: 12px; }
+.card:hover { border-color: #2F5BEA; }
+.footer { text-align: center; padding: 20px; background: #E6ECF8; }
+
+/* ---------- Media queries (three syntaxes) ---------- */
+@media (max-width: 600px) {
+  body { background: #FFF6CC; }
+  .only-wide { display: none; }
+  .only-narrow { display: block; }
+  .flex { flex-wrap: wrap; }
+  .products { flex-direction: column; align-items: center; }
+  .card { margin-bottom: 14px; }
+  .shop-nav { flex-direction: column; }
+  .u-pct { width: 90%; }
+}
+@media (min-width: 601px) {
+  .only-wide { background: #2EC4B6; padding: 6px; }
+}
+@media (width <= 400px) {
+  h1 { font-size: 26px; }
+  .cb, .bb { width: 100%; }
+}
+</style>
+</head>
+
+<body id="top">
+
+<!-- ======================= HEADER ======================= -->
+<header class="wrap">
+  <h1>Field Notes: Full Stack, So&nbsp;Far</h1>
+  <p>One page that uses what we have learned so far. It starts with plain text and gets harder
+     as you scroll, so the bottom is where the CSS gets serious. <strong>Resize the window</strong> as you read.</p>
+  <nav>
+    <a href="#l1">Text</a> |
+    <a href="#l3">Lists &amp; links</a> |
+    <a href="#l6">Forms</a> |
+    <a href="#l7">Box model</a> |
+    <a href="#l10">Position</a> |
+    <a href="#l11">Flexbox</a> |
+    <a href="#l13">Final build</a>
+  </nav>
+</header>
+
+<main class="wrap">
+
+<!-- ======================= LEVEL 1 ======================= -->
+<section class="level" id="l1">
+  <h2><span class="tag">Level 1</span> Words on a page</h2>
+  <!-- Comments are never shown on the page -->
+  <h3>Headings and text</h3>
+  <p>Headings run from h1 to h6. Text can be <strong>strong</strong>, <em>emphasised</em> or <ins>inserted</ins>.</p>
+  <p>A <code>br</code> tag has no closing tag,<br>so this line starts fresh. Same for <code>hr</code> below.</p>
+  <hr>
+  <p>Special characters: 5 &lt; 7 and 9 &gt; 2, Terms &amp; Conditions, she said &quot;hi&quot;, Field Notes&trade; &mdash; &copy; 2026.
+     Spaces collapse, but&nbsp;&nbsp;&nbsp;&nbsp;these&nbsp;&nbsp;&nbsp;&nbsp;do&nbsp;not.</p>
+  <p style="color: blue; background-color: yellow;">This paragraph uses inline CSS, written directly on the tag.</p>
+</section>
+
+<!-- ======================= LEVEL 2 ======================= -->
+<section class="level" id="l2">
+  <h2><span class="tag">Level 2</span> Selectors and colours</h2>
+  <p>The tag selector styles every <code>p</code>. An <span id="special">id picks exactly one element</span>, and a
+     <span class="highlight">class</span> can be <span class="highlight">reused</span> on <span class="highlight">many</span>.</p>
+  <p>One colour, three ways: <span class="c-keyword">keyword (yellow)</span>,
+     <span class="c-hex">hex (#2EC4B6)</span>, <span class="c-rgb">rgb(255, 210, 63)</span>.</p>
+  <p class="note">Three places CSS can live: inline (<code>style="..."</code>), internal (a style block in the head, used on this
+     page) and external (a separate style.css linked in the head).</p>
+</section>
+
+<!-- ======================= LEVEL 3 ======================= -->
+<section class="level" id="l3">
+  <h2><span class="tag">Level 3</span> Lists and links</h2>
+  <h3>Three kinds of lists</h3>
+  <ul>
+    <li>Unordered: order does not matter</li>
+    <li>Groceries, tags, menu items</li>
+  </ul>
+  <ol>
+    <li>Ordered: steps in a sequence</li>
+    <li>Write HTML</li>
+    <li>Add CSS</li>
+  </ol>
+  <dl>
+    <dt>HTML</dt><dd>The structure and content of a page.</dd>
+    <dt>CSS</dt><dd>The look of that structure.</dd>
+  </dl>
+
+  <h3>Types of links</h3>
+  <ul>
+    <li><a href="./Pages/about.html">Current-directory relative</a> (./Pages/about.html)</li>
+    <li><a href="/4_HTML/Pages/about.html">Root-relative</a> (/4_HTML/Pages/about.html)</li>
+    <li><a href="https://www.google.com/" target="_blank">Absolute, new tab</a> (target="_blank")</li>
+    <li><a href="https://www.google.com/" target="_self">Absolute, same tab</a> (target="_self", the default)</li>
+    <li><a href="mailto:support@yourwebsite.com">Send an email</a> (mailto:)</li>
+    <li><a href="tel:+91991199119911">Start a call</a> (tel:)</li>
+    <li><a href="#top">Page jump back to the top</a> (#top)</li>
+  </ul>
+  <p class="note">The first two links point to this course's folder layout, so they only work inside that project.
+     <code>_parent</code> and <code>_top</code> matter once a page is inside an iframe.</p>
+</section>
+
+<!-- ======================= LEVEL 4 ======================= -->
+<section class="level" id="l4">
+  <h2><span class="tag">Level 4</span> Semantic structure</h2>
+  <p>This whole page is built from landmark tags: <code>header</code>, <code>nav</code>, <code>main</code>,
+     <code>section</code>, <code>article</code>, <code>aside</code> and <code>footer</code>. Only one <code>main</code> is allowed.</p>
+  <article>
+    <header><h3>An article stands on its own</h3></header>
+    <p>Articles can have their own header and footer, like a blog post would.</p>
+    <footer><em>Posted by a student</em></footer>
+  </article>
+  <aside>An aside is related but not essential, like a sidebar tip.</aside>
+</section>
+
+<!-- ======================= LEVEL 5 ======================= -->
+<section class="level" id="l5">
+  <h2><span class="tag">Level 5</span> Images and embeds</h2>
+  <p>
+    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='100'%3E%3Crect width='160' height='100' fill='%232F5BEA'/%3E%3C/svg%3E"
+         alt="A plain blue rectangle" width="160" height="100">
+    <img src="missing-photo.jpg" alt="This image failed to load, so its alt text shows instead" width="260" height="60">
+  </p>
+  <p>An iframe shows another page inside this one. Some sites (like Amazon) refuse to be embedded.</p>
+  <iframe src="https://www.youtube.com/embed/jNQXAC9IVRw" width="300" height="170" title="YouTube video"></iframe>
+  <iframe src="https://www.google.com/maps?q=Jaipur&amp;output=embed" width="300" height="170" title="Map of Jaipur"></iframe>
+</section>
+
+<!-- ======================= LEVEL 6 ======================= -->
+<section class="level" id="l6">
+  <h2><span class="tag">Level 6</span> Forms</h2>
+  <form action="#l6">
+    <label for="name">Name</label><br>
+    <input type="text" id="name" name="Name" placeholder="Enter your name"><br>
+
+    <label for="age">Age (required)</label><br>
+    <input type="number" id="age" name="Age" placeholder="Enter your age" required><br>
+
+    <label for="city">City (has a preset value)</label><br>
+    <input type="text" id="city" name="City" value="Delhi"><br>
+
+    <label for="course">Favourite topic (select)</label><br>
+    <select id="course" name="topic">
+      <option>HTML</option>
+      <option>CSS</option>
+      <option>Git</option>
+    </select><br>
+
+    <p>Pick one (radio):
+      <input type="radio" id="r1" name="mode" value="mobile"> <label for="r1">Mobile first</label>
+      <input type="radio" id="r2" name="mode" value="desktop"> <label for="r2">Desktop first</label>
+    </p>
+    <p>Pick any (checkbox):
+      <input type="checkbox" id="c1" name="likes" value="flex"> <label for="c1">Flexbox</label>
+      <input type="checkbox" id="c2" name="likes" value="pos"> <label for="c2">Position</label>
+    </p>
+
+    <input type="submit" value="Submit with input">
+    <button type="submit">Submit with button</button>
+  </form>
+</section>
+
+<!-- ======================= LEVEL 7 ======================= -->
+<section class="level" id="l7">
+  <h2><span class="tag">Level 7</span> The box model</h2>
+  <p>Content, then padding, then border, then margin. Inspect these in DevTools.</p>
+  <div class="box">Padding 20px, border 5px, margin 20px</div>
+  <div class="pad-four">Shorthand: padding 10px 40px 10px 5px (top, right, bottom, left)</div>
+  <p class="centered">width 300px + margin 0 auto = centred</p>
+
+  <h3>Margins between stacked elements collapse</h3>
+  <p class="gap-a">margin-bottom: 30px</p>
+  <p class="gap-b">margin-top: 20px (the gap is 30px, not 50px)</p>
+
+  <h3>box-sizing</h3>
+  <div class="cb">content-box: width 300px, but the real box grows to 350px</div>
+  <div class="bb">border-box: width 300px, padding and border included</div>
+
+  <h3>Block vs inline, and display</h3>
+  <div class="demo-div">A div takes the full line.</div>
+  <p><span class="demo-span">Spans sit</span> <span class="demo-span">side by side.</span></p>
+  <span class="swapped-span">span with display: block</span>
+  <div class="swapped-div">div with display: inline</div>
+  <p>Hidden element (display: none): <span class="gone">you cannot see me and I take no space</span>nothing here.</p>
+</section>
+
+<!-- ======================= LEVEL 8 ======================= -->
+<section class="level" id="l8">
+  <h2><span class="tag">Level 8</span> The cascade and units</h2>
+  <p>Weakest to strongest: browser default, universal, tag, class, id, inline, <code>!important</code>.</p>
+  <h5>Tag selector only: blue</h5>
+  <h5 class="battle">Tag + class: orange (class wins)</h5>
+  <h5 class="battle" id="winner" style="color: red;">Tag + class + id + inline + !important: teal wins</h5>
+
+  <h3>Units</h3>
+  <div class="bar u-px">200px: fixed</div>
+  <div class="bar u-pct">50%: half of the parent</div>
+  <div class="bar u-vw">30vw: 30% of the window width</div>
+  <div class="bar u-vh">8vh: 8% of the window height</div>
+</section>
+
+<!-- ======================= LEVEL 9 ======================= -->
+<section class="level" id="l9">
+  <h2><span class="tag">Level 9</span> Rounded corners, backgrounds, opacity, states</h2>
+  <div>
+    <span class="shape"></span><span class="shape r20"></span><span class="shape r50"></span>
+  </div>
+  <div class="photo">background-image with size cover and position center (here a gradient)</div>
+
+  <h3>opacity vs rgba</h3>
+  <div class="stripes">
+    <div class="dark faded">opacity: 0.5 fades the whole box, text included</div>
+    <div class="dark see-through">rgba(0, 0, 0, 0.5) fades only the background</div>
+  </div>
+
+  <h3>Hover and active</h3>
+  <button class="press">Hover me, then press and hold</button>
+</section>
+
+<!-- ======================= LEVEL 10 ======================= -->
+<section class="level" id="l10">
+  <h2><span class="tag">Level 10</span> Position</h2>
+  <p>Static is the default. The dark "Top" button in the corner is <code>position: fixed</code>: it stays put as you scroll.</p>
+  <div class="shifted">relative: nudged from where it normally sits</div>
+  <div class="stage">
+    absolute boxes are placed inside the nearest positioned parent (this grey stage).
+    <div class="pa">A</div>
+    <div class="pb">B (z-index: 1, on top)</div>
+  </div>
+</section>
+
+<!-- ======================= LEVEL 11 ======================= -->
+<section class="level" id="l11">
+  <h2><span class="tag">Level 11</span> Flexbox</h2>
+  <div class="flex jc-center"><span class="item">A</span><span class="item">B</span><span class="item">C</span></div>
+  <div class="flex jc-between"><span class="item">space-between</span><span class="item">B</span><span class="item">C</span></div>
+  <div class="flex jc-around"><span class="item">space-around</span><span class="item">B</span><span class="item">C</span></div>
+  <div class="flex tall"><span class="item">align-items: center</span><span class="item">row direction</span></div>
+  <div class="flex column"><span class="item">flex-direction: column</span><span class="item">items stacked</span></div>
+  <div class="flex center-all"><span class="item">Centred both ways</span></div>
+</section>
+
+<!-- ======================= LEVEL 12 ======================= -->
+<section class="level" id="l12">
+  <h2><span class="tag">Level 12</span> Smarter selectors and responsive design</h2>
+  <ul>
+    <li class="n">Item 1</li><li class="n">Item 2 (even)</li><li class="n">Item 3 (red)</li>
+    <li class="n">Item 4 (even)</li><li class="n">Item 5 (red)</li><li class="n">Item 6 (even)</li>
+  </ul>
+  <div>
+    <h4 class="t">Title One</h4>
+    <h4 class="t">Title Two (second of its type)</h4>
+    <p class="t">Text One (third child: green)</p>
+    <p class="t">Text Two (second p of its type)</p>
+  </div>
+  <p class="only-wide">You see this on windows wider than 600px (min-width media query).</p>
+  <p class="only-narrow">You see this on windows 600px or narrower (max-width media query, hides the other one with display: none).</p>
+  <p class="note">The viewport meta tag in the head makes real phones use their true screen width. Below 400px the headline
+     shrinks using the newer <code>width &lt;= 400px</code> syntax.</p>
+</section>
+
+<!-- ======================= LEVEL 13 ======================= -->
+<section class="level" id="l13">
+  <h2><span class="tag">Level 13</span> Final build: a mini shop</h2>
+  <p>Flexbox for the navbar and cards, position for the overlay and badge, box model and units for spacing,
+     border-radius, background-image and rgba for the finish.</p>
+
+  <div class="shop">
+    <div class="shop-nav">
+      <strong>Kiln &amp; Co.</strong>
+      <div><a href="#l13">Shop</a><a href="#l13">Story</a><a href="#l13">Cart (0)</a></div>
+    </div>
+
+    <div class="shop-hero">
+      <div class="overlay"></div>
+      <div class="hero-content">
+        <h3>Objects for a slower home</h3>
+        <p>Hand-thrown ceramics in small batches.</p>
+        <a class="cta" href="#l13">Shop the collection</a>
+      </div>
+    </div>
+
+    <div class="products">
+      <div class="card">
+        <div class="badge">NEW</div>
+        <div class="card-img" style="background-color: #C9A27E;"></div>
+        <div class="card-body"><strong>Stoneware Mug</strong><p>$28</p><button>Add to cart</button></div>
+      </div>
+      <div class="card">
+        <div class="card-img" style="background-color: #8FA58B;"></div>
+        <div class="card-body"><strong>Serving Bowl</strong><p>$46</p><button>Add to cart</button></div>
+      </div>
+      <div class="card">
+        <div class="badge">NEW</div>
+        <div class="card-img" style="background-color: #B79DA3;"></div>
+        <div class="card-body"><strong>Rose Vase</strong><p>$62</p><button>Add to cart</button></div>
+      </div>
+    </div>
+
+    <div class="footer">&copy; 2026 Kiln &amp; Co.&trade; Handmade in small batches.</div>
+  </div>
+</section>
+
+</main>
+
+<footer class="wrap">
+  <p>&copy; 2026 Field Notes&trade; &mdash; built while learning.</p>
+</footer>
+
+<a class="to-top" href="#top">Top</a>
+
+</body>
+</html>
