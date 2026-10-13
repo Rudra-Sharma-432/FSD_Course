@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<!-- The line above tells the browser: this page is written in HTML5 -->
+<html lang="en">
+
+<head>
+  <!-- HEAD = information about the page. Nothing here shows on the page itself. -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HTML Basics</title> <!-- the text on the browser tab -->
+
+  <!-- The only CSS on this page: just colours and a font, nothing else -->
+  <style>
+    body { font-family: Arial, sans-serif; color: #222222; background-color: #fffbe6; }
+    h1, h2 { color: darkblue; }
+    .green { color: green; }
+    #red-text { color: red; }
+  </style>
+</head>
+
+<body>
+  <!-- BODY = everything the visitor can see -->
+
+  <!-- HEADER: the top of the page (title, logo, menu) -->
+  <header>
+    <h1>My First Real Web Page</h1>
+    <p>This page shows the most important HTML tags. Read the comments in the code!</p>
+
+    <!-- NAV: a group of links to move around the page -->
+    <nav>
+      <a href="#text">Text</a> |
+      <a href="#lists">Lists</a> |
+      <a href="#links">Links</a> |
+      <a href="#media">Image &amp; Video</a> |
+      <a href="#form">Form</a>
+    </nav>
+  </header>
+
+  <hr> <!-- a horizontal line (no closing tag needed) -->
+
+  <!-- MAIN: the main content of the page. Only ONE main per page. -->
+  <main>
+
+    <!-- SECTION: a group of related content, usually with a heading -->
+    <section id="text">
+      <h2>1. Headings and paragraphs</h2>
+      <!-- Headings go from h1 (biggest) to h6 (smallest) -->
+      <h3>This is a heading 3</h3>
+      <h4>This is a heading 4</h4>
+
+      <!-- p = paragraph -->
+      <p>This is a paragraph. Paragraphs hold normal text.</p>
+      <p>Press Enter twice in the code and it still looks like one space.<br>
+         But a br tag starts a new line.</p>
+
+      <h3>Making text stand out</h3>
+      <p>This word is <strong>strong</strong> (bold).</p>
+      <p>This word is <em>emphasised</em> (italic).</p>
+      <p>This word is <ins>inserted</ins> (underlined).</p>
+
+      <h3>Special characters</h3>
+      <!-- Some symbols are written with &name; -->
+      <p>5 &lt; 10 and 10 &gt; 5. Tom &amp; Jerry. &copy; 2026. Brand&trade;.</p>
+
+      <h3>A little colour</h3>
+      <p class="green">This paragraph is green (a class).</p>
+      <p id="red-text">This paragraph is red (an id).</p>
+      <p style="color: blue;">This paragraph is blue (inline style).</p>
+    </section>
+
+    <hr>
+
+    <section id="lists">
+      <h2>2. Lists</h2>
+
+      <h3>Unordered list (bullets)</h3>
+      <ul>
+        <li>Apple</li>
+        <li>Banana</li>
+        <li>Mango</li>
+      </ul>
+
+      <h3>Ordered list (numbers)</h3>
+      <ol>
+        <li>Wake up</li>
+        <li>Open VS Code</li>
+        <li>Write HTML</li>
+      </ol>
+
+      <h3>Description list (term + meaning)</h3>
+      <dl>
+        <dt>HTML</dt>
+        <dd>The structure of a web page.</dd>
+        <dt>CSS</dt>
+        <dd>The style of a web page.</dd>
+      </dl>
+    </section>
+
+    <hr>
+
+    <section id="links">
+      <h2>3. Links</h2>
+      <!-- a = anchor (link), href = where it goes -->
+      <ul>
+        <li><a href="https://www.google.com/">Go to Google</a> (opens in the same tab)</li>
+        <li><a href="https://www.google.com/" target="_blank">Go to Google in a new tab</a></li>
+        <li><a href="mailto:hello@example.com">Send an email</a></li>
+        <li><a href="tel:+911234567890">Call a number</a></li>
+        <li><a href="#top-of-page">Jump to the bottom of the page</a></li>
+      </ul>
+    </section>
+
+    <hr>
+
+    <section id="media">
+      <h2>4. Image and video</h2>
+
+      <!-- img has no closing tag. src = the picture, alt = text if it cannot load -->
+      <p>An image:</p>
+      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='100'%3E%3Crect width='200' height='100' fill='orange'/%3E%3C/svg%3E"
+           alt="An orange rectangle" width="200" height="100">
+
+      <p>An image that cannot load (see the alt text):</p>
+      <img src="this-file-does-not-exist.jpg" alt="Sorry, this picture is missing">
+
+      <!-- iframe = a web page (or video) shown inside your page -->
+      <p>A video inside an iframe:</p>
+      <iframe src="https://www.youtube.com/embed/jNQXAC9IVRw" width="320" height="180" title="A YouTube video"></iframe>
+    </section>
+
+    <hr>
+
+    <!-- ARTICLE: content that makes sense on its own, like a blog post -->
+    <article>
+      <h2>5. An article</h2>
+      <p>An article could be a news story, a blog post or a product card.</p>
+    </article>
+
+    <!-- ASIDE: extra information that is not the main point -->
+    <aside>
+      <p><em>Tip: use article for stand-alone content and aside for side notes.</em></p>
+    </aside>
+
+    <hr>
+
+    <section id="form">
+      <h2>6. A form</h2>
+      <!-- form = a place where visitors give you information -->
+      <form action="#form">
+
+        <!-- label = the name of the box. "for" matches the input's id -->
+        <label for="name">Your name:</label><br>
+        <input type="text" id="name" name="name" placeholder="Type your name"><br><br>
+
+        <label for="email">Your email:</label><br>
+        <input type="email" id="email" name="email" placeholder="you@example.com"><br><br>
+
+        <label for="age">Your age (required):</label><br>
+        <input type="number" id="age" name="age" required><br><br>
+
+        <label for="password">A password:</label><br>
+        <input type="password" id="password" name="password"><br><br>
+
+        <!-- select = a dropdown menu -->
+        <label for="city">Choose a city:</label><br>
+        <select id="city" name="city">
+          <option>Jaipur</option>
+          <option>Delhi</option>
+          <option>Mumbai</option>
+        </select><br><br>
+
+        <!-- radio = pick only ONE (same name makes a group) -->
+        <p>Do you like HTML?</p>
+        <input type="radio" id="yes" name="like" value="yes">
+        <label for="yes">Yes</label>
+        <input type="radio" id="no" name="like" value="no">
+        <label for="no">No</label>
+
+        <!-- checkbox = pick as MANY as you want -->
+        <p>What do you want to learn?</p>
+        <input type="checkbox" id="css" name="learn" value="css">
+        <label for="css">CSS</label>
+        <input type="checkbox" id="js" name="learn" value="js">
+        <label for="js">JavaScript</label>
+
+        <!-- textarea = a big box for long text -->
+        <p><label for="message">Your message:</label></p>
+        <textarea id="message" name="message" rows="4" cols="30"></textarea>
+
+        <br><br>
+        <button type="submit">Send</button>
+      </form>
+    </section>
+
+  </main>
+
+  <hr>
+
+  <!-- FOOTER: the bottom of the page (copyright, contact, links) -->
+  <footer>
+    <p id="top-of-page">&copy; 2026 HTML Basics. Made while learning.</p>
+    <p><a href="#">Back to the top</a></p>
+  </footer>
+
+</body>
+</html>
