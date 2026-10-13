@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CSS Practice: Hero, Shapes, Compositions</title>
+
+<!--
+  HOW TO USE THIS FILE
+  The HTML is deliberately simple (div, h1-h3, p). All the learning is in the CSS below.
+  Change a number, save, refresh, and see what moves.
+  Four phases, easy to harder:
+    Phase 1: a minimal hero section
+    Phase 2: real website parts (navbar, cards, stats, pricing, footer)
+    Phase 3: single shapes (one property at a time)
+    Phase 4: shapes combined into bigger structures
+-->
+<style>
+/* ===================== BASE ===================== */
+* { box-sizing: border-box; margin: 0; padding: 0; }   /* start every element from zero */
+body { background: #101828; color: #F4F1EA; font-family: Arial, sans-serif; line-height: 1.5; }
+
+.phase-title { text-align: center; padding: 50px 20px 10px; }
+.phase-title h2 { font-size: 32px; margin-bottom: 6px; }
+.phase-title p { color: #98A2B3; }
+
+/* ===================== PHASE 1: MINIMAL HERO ===================== */
+/* Flexbox centres the content both ways. 90vh = 90% of the window height. */
+.hero {
+  height: 90vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 0 20px;
+}
+.hero h1 { font-size: 56px; margin-bottom: 16px; }
+.hero h1 span { color: #FF7A45; }
+.hero p { max-width: 480px; margin-bottom: 28px; color: #98A2B3; font-size: 18px; }
+
+/* a div can look like a button: colour + padding + border-radius */
+.btn { background: #FF7A45; color: #101828; padding: 12px 28px; border-radius: 30px; font-weight: bold; cursor: pointer; }
+.btn:hover { scale: 1.1; }      /* mouse over */
+.btn:active { scale: 0.9; }     /* mouse pressed */
+
+/* ===================== PHASE 2: REAL WEBSITE PARTS ===================== */
+/* Light background so you can see these parts on a "normal" website look */
+.parts { background: #F4F1EA; color: #101828; padding-bottom: 50px; }
+.parts .phase-title p { color: #475467; }
+
+/* container: a centred column. This exact pattern is on almost every website. */
+.container { max-width: 960px; margin: 0 auto; padding: 0 20px; }
+
+/* small tag above each part that says which CSS it practises */
+.label { display: inline-block; margin: 40px 0 16px; padding: 8px 14px; border-radius: 8px; background: #101828; color: #F4F1EA; font-size: 13px; }
+
+/* ---- 1. Navbar: flex + space-between + align-items + padding ---- */
+.nav {
+  position: sticky; top: 0; z-index: 5;     /* sticky: scrolls normally, then sticks to the top (a little beyond the syllabus) */
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 16px 24px; background: #101828; color: #F4F1EA;
+}
+.nav-logo { font-size: 20px; font-weight: bold; }
+.nav-links { display: flex; align-items: center; }
+.nav-link { margin-left: 24px; color: #98A2B3; cursor: pointer; }
+.nav-link:hover { color: #FF7A45; }
+.nav-cta { margin-left: 24px; padding: 8px 18px; border-radius: 20px; background: #FF7A45; color: #101828; font-weight: bold; cursor: pointer; }
+
+/* ---- 2. Feature cards: a row of equal boxes ---- */
+.cards { display: flex; justify-content: space-between; }
+.feature {
+  width: 31%; padding: 24px;
+  background: white; border: 1px solid #D0D5DD; border-radius: 16px;
+  transition: all 0.25s;                    /* smooth hover (beyond the syllabus, but used everywhere) */
+}
+.feature:hover { translate: 0 -6px; box-shadow: 0 10px 24px rgba(16, 24, 40, 0.15); }  /* lift + shadow */
+.icon { width: 48px; height: 48px; margin-bottom: 16px; border-radius: 12px; background: #FF7A45; }
+.icon-violet { background: #6C5CE7; }
+.icon-aqua { background: #3DDBD9; }
+.feature h3 { margin-bottom: 8px; font-size: 20px; }
+.feature p { color: #475467; }
+
+/* ---- 3. Stats strip: space-around spreads items evenly ---- */
+.stats { display: flex; justify-content: space-around; padding: 28px 10px; text-align: center; background: white; border: 1px solid #D0D5DD; border-radius: 16px; }
+.stat-num { font-size: 36px; font-weight: bold; color: #6C5CE7; }
+.stat-text { color: #475467; }
+
+/* ---- 4. Pricing card + testimonial side by side ---- */
+.duo { display: flex; justify-content: space-between; align-items: center; }
+.price {
+  position: relative;                       /* so the badge can be placed on its corner */
+  width: 48%; padding: 36px 24px; text-align: center;
+  background: white; border: 2px solid #6C5CE7; border-radius: 16px;
+}
+.badge { position: absolute; top: -14px; right: 20px; padding: 4px 14px; border-radius: 20px; background: #6C5CE7; color: white; font-size: 12px; font-weight: bold; }
+.price-amount { margin: 8px 0 4px; font-size: 40px; font-weight: bold; }
+.price .btn { display: inline-block; margin-top: 18px; }
+.quote { display: flex; align-items: center; width: 48%; padding: 24px; background: white; border: 1px solid #D0D5DD; border-radius: 16px; }
+.avatar { flex-shrink: 0; width: 56px; height: 56px; margin-right: 16px; border-radius: 50%; background-image: linear-gradient(135deg, #FF7A45, #6C5CE7); }
+.quote-name { margin-top: 6px; font-weight: bold; font-size: 14px; }
+
+/* ---- 5. Call-to-action banner ---- */
+.cta-band { margin-top: 40px; padding: 50px 20px; text-align: center; color: white; border-radius: 20px; background-image: linear-gradient(135deg, #6C5CE7, #FF7A45); }
+.cta-band h2 { margin-bottom: 8px; }
+.cta-band p { margin-bottom: 20px; }
+.btn-light { display: inline-block; padding: 12px 28px; border-radius: 30px; background: white; color: #101828; font-weight: bold; cursor: pointer; }
+.btn-light:hover { scale: 1.1; }
+
+/* ---- 6. Footer columns ---- */
+.site-footer { display: flex; justify-content: space-between; margin-top: 50px; padding: 40px 24px; background: #101828; color: #98A2B3; }
+.f-col { width: 30%; }
+.f-title { margin-bottom: 10px; font-size: 16px; color: #F4F1EA; }
+.f-link { margin-bottom: 6px; font-size: 14px; cursor: pointer; }
+.f-link:hover { color: #FF7A45; }
+
+/* ===================== PHASE 3: SHAPE PRACTICE ===================== */
+.lab { background: #182230; padding-bottom: 50px; }
+.row { display: flex; flex-wrap: wrap; justify-content: center; max-width: 900px; margin: 0 auto; }
+.cell { width: 190px; margin: 18px 10px; text-align: center; }
+.cell p { margin-top: 12px; font-size: 14px; color: #98A2B3; }
+.stage-box { height: 120px; display: flex; justify-content: center; align-items: center; }  /* keeps every shape centred */
+
+.shape { width: 100px; height: 100px; background: #FF7A45; }
+
+/* 1. width + height + background make a rectangle. That's the starting point. */
+.wide { width: 150px; height: 70px; background: #6C5CE7; }
+
+/* 2. border-radius rounds corners */
+.rounded { border-radius: 20px; background: #3DDBD9; }
+.circle { border-radius: 50%; background: #FF7A45; }
+.pill { width: 150px; height: 60px; border-radius: 30px; background: #6C5CE7; }
+.ellipse { width: 150px; height: 90px; border-radius: 50%; background: #3DDBD9; }
+
+/* 3. different radius per corner: top-left, top-right, bottom-right, bottom-left */
+.half { height: 50px; border-radius: 100px 100px 0 0; background: #FF7A45; }
+.quarter { border-radius: 100px 0 0 0; background: #6C5CE7; }
+.leaf { border-radius: 0 100px 0 100px; background: #3DDBD9; }
+
+/* 4. a border can be the shape: a ring is a transparent circle with a thick border */
+.ring { background: transparent; border: 14px solid #FF7A45; border-radius: 50%; }
+
+/* 5. triangle: zero size, and the borders do the drawing (transparent sides, one coloured side) */
+.triangle {
+  width: 0; height: 0; background: transparent;
+  border-left: 50px solid transparent;
+  border-right: 50px solid transparent;
+  border-bottom: 90px solid #6C5CE7;
+}
+
+/* 6. transform rotate (one small new tool): a rotated square is a diamond */
+.diamond { width: 70px; height: 70px; background: #3DDBD9; transform: rotate(45deg); }
+
+/* 7. gradients, opacity and rgba change the fill */
+.gradient { border-radius: 50%; background-image: linear-gradient(135deg, #FF7A45, #6C5CE7); }
+.faded { border-radius: 50%; opacity: 0.4; }
+.glass { border-radius: 14px; background-color: rgba(255, 255, 255, 0.25); border: 2px solid #F4F1EA; }
+
+/* 8. hover: any shape can react */
+.shape:hover { scale: 1.2; }
+
+/* ===================== PHASE 4: SHAPES FORM STRUCTURES ===================== */
+.build { display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-end; max-width: 1000px; margin: 0 auto; padding: 30px 20px 70px; }
+.piece { margin: 24px 30px; text-align: center; }
+.piece p { margin-top: 18px; color: #98A2B3; font-size: 14px; }
+
+/* the "stage" rule for everything below:
+   parent = position: relative, children = position: absolute (measured from the parent's corner) */
+
+/* ---- A. Orbit: circles inside circles ---- */
+.orbit { position: relative; width: 300px; height: 300px; margin: 0 auto; }
+.ring-a, .ring-b, .sun, .planet { position: absolute; border-radius: 50%; }
+.ring-a { top: 0; left: 0; width: 300px; height: 300px; border: 2px solid #344054; }
+.ring-b { top: 50px; left: 50px; width: 200px; height: 200px; border: 2px solid #475467; }
+.sun { top: 100px; left: 100px; width: 100px; height: 100px; background-image: linear-gradient(135deg, #FF7A45, #FFC145); }
+.planet { background: #3DDBD9; }
+.pl-1 { top: -10px; left: 140px; width: 20px; height: 20px; }
+.pl-2 { top: 160px; left: 240px; width: 28px; height: 28px; background: #6C5CE7; }
+.pl-3 { top: 220px; left: 70px; width: 16px; height: 16px; background: #F4F1EA; }
+.orbit:hover .sun { scale: 1.15; }
+
+/* ---- B. Overlap: transparent circles mix colours ---- */
+.trio { position: relative; width: 260px; height: 250px; margin: 0 auto; }
+.blob { position: absolute; width: 150px; height: 150px; border-radius: 50%; }
+.b1 { top: 0; left: 25px; background-color: rgba(255, 122, 69, 0.7); }
+.b2 { top: 0; left: 85px; background-color: rgba(108, 92, 231, 0.7); }
+.b3 { top: 80px; left: 55px; background-color: rgba(61, 219, 217, 0.7); }
+.trio:hover .b1 { top: -12px; }
+.trio:hover .b2 { left: 95px; }
+.trio:hover .b3 { top: 92px; }
+
+/* ---- C. Robot: a character built from simple shapes. Later in the HTML = drawn on top. ---- */
+.robot { position: relative; width: 200px; height: 250px; margin: 0 auto; }
+.robot div { position: absolute; }
+.r-ball { top: 0; left: 88px; width: 24px; height: 24px; border-radius: 50%; background: #FF7A45; }
+.r-ant { top: 20px; left: 96px; width: 8px; height: 30px; background: #98A2B3; }
+.r-head { top: 45px; left: 0; width: 200px; height: 170px; border-radius: 30px; background: #3DDBD9; }
+.r-ear { top: 100px; width: 14px; height: 50px; border-radius: 6px; background: #6C5CE7; }
+.ear-l { left: -14px; }
+.ear-r { left: 200px; }
+.r-eye { top: 90px; width: 40px; height: 40px; border-radius: 50%; background: #101828; }
+.eye-l { left: 38px; }
+.eye-r { left: 122px; }
+.r-spark { top: 98px; width: 12px; height: 12px; border-radius: 50%; background: #F4F1EA; }
+.spark-l { left: 52px; }
+.spark-r { left: 136px; }
+.r-mouth { top: 160px; left: 60px; width: 80px; height: 12px; border-radius: 12px; background: #101828; }
+.r-cheek { top: 140px; width: 24px; height: 12px; border-radius: 50%; background-color: rgba(255, 122, 69, 0.6); }
+.cheek-l { left: 20px; }
+.cheek-r { left: 156px; }
+.r-neck { top: 215px; left: 80px; width: 40px; height: 20px; background: #98A2B3; }
+.robot:hover .r-ball { background: #F4F1EA; }
+.robot:hover .r-mouth { height: 24px; border-radius: 0 0 40px 40px; }
+
+/* ---- Footer ---- */
+.footer { text-align: center; padding: 30px 20px; color: #667085; border-top: 1px solid #344054; }
+
+/* ===================== RESPONSIVE ===================== */
+@media (max-width: 600px) {
+  .hero h1 { font-size: 36px; }
+  .hero p { font-size: 16px; }
+
+  /* real-site habit: rows become columns on phones */
+  .cards, .duo, .stats, .site-footer { flex-direction: column; }
+  .feature, .price, .quote, .f-col { width: 100%; margin-bottom: 16px; }
+  .stat { margin-bottom: 14px; }
+  .nav-link { display: none; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ======================= PHASE 1 ======================= -->
+<div class="hero">
+  <h1>Make shapes with <span>CSS</span></h1>
+  <p>No images, no JavaScript. Just a few divs and a few lines of CSS.</p>
+  <div class="btn">Start practising</div>
+</div>
+
+<!-- ======================= PHASE 2: REAL WEBSITE PARTS ======================= -->
+<div class="parts">
+  <div class="phase-title">
+    <h2>Phase 2: parts of a real website</h2>
+    <p>Still only divs, h and p. Scroll slowly and hover over things.</p>
+  </div>
+
+  <div class="container">
+    <div class="label">Navbar: display flex + justify-content space-between + align-items center + padding + position sticky</div>
+  </div>
+
+  <div class="nav">
+    <div class="nav-logo">Brandly</div>
+    <div class="nav-links">
+      <div class="nav-link">Home</div>
+      <div class="nav-link">Features</div>
+      <div class="nav-link">Pricing</div>
+      <div class="nav-cta">Sign up</div>
+    </div>
+  </div>
+
+  <div class="container">
+
+    <div class="label">Feature cards: flex row + width in % + padding + border + border-radius + hover (translate, box-shadow)</div>
+    <div class="cards">
+      <div class="feature">
+        <div class="icon"></div>
+        <h3>Fast</h3>
+        <p>Short paragraph that explains the first feature in a sentence or two.</p>
+      </div>
+      <div class="feature">
+        <div class="icon icon-violet"></div>
+        <h3>Simple</h3>
+        <p>Cards repeat the same structure, so you write the CSS once and reuse it.</p>
+      </div>
+      <div class="feature">
+        <div class="icon icon-aqua"></div>
+        <h3>Flexible</h3>
+        <p>Change the width or padding and see how the row reacts.</p>
+      </div>
+    </div>
+
+    <div class="label">Stats strip: flex + space-around + text-align center</div>
+    <div class="stats">
+      <div class="stat"><div class="stat-num">10k+</div><div class="stat-text">Users</div></div>
+      <div class="stat"><div class="stat-num">99%</div><div class="stat-text">Uptime</div></div>
+      <div class="stat"><div class="stat-num">24/7</div><div class="stat-text">Support</div></div>
+    </div>
+
+    <div class="label">Pricing card with a badge (position relative + absolute) and a testimonial (flex + avatar circle)</div>
+    <div class="duo">
+      <div class="price">
+        <div class="badge">POPULAR</div>
+        <h3>Pro plan</h3>
+        <div class="price-amount">$19</div>
+        <p>per month</p>
+        <div class="btn">Choose plan</div>
+      </div>
+      <div class="quote">
+        <div class="avatar"></div>
+        <div>
+          <p>"A short quote from a happy customer goes here."</p>
+          <p class="quote-name">Aarav, designer</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="label">Call-to-action banner: gradient + padding + text-align + margin</div>
+    <div class="cta-band">
+      <h2>Ready to build?</h2>
+      <p>Every website you use is made of parts like these.</p>
+      <div class="btn-light">Get started</div>
+    </div>
+
+  </div>
+
+  <div class="container">
+    <div class="label">Footer columns: flex + space-between + percentage widths</div>
+  </div>
+  <div class="site-footer">
+    <div class="f-col">
+      <h3 class="f-title">Brandly</h3>
+      <p class="f-link">About</p>
+      <p class="f-link">Careers</p>
+    </div>
+    <div class="f-col">
+      <h3 class="f-title">Product</h3>
+      <p class="f-link">Features</p>
+      <p class="f-link">Pricing</p>
+    </div>
+    <div class="f-col">
+      <h3 class="f-title">Help</h3>
+      <p class="f-link">Contact</p>
+      <p class="f-link">FAQ</p>
+    </div>
+  </div>
+</div>
+
+<!-- ======================= PHASE 3 ======================= -->
+<div class="lab">
+  <div class="phase-title">
+    <h2>Phase 3: one shape, one idea</h2>
+    <p>Every shape is a div. Only the CSS changes.</p>
+  </div>
+
+  <div class="row">
+    <div class="cell"><div class="stage-box"><div class="shape wide"></div></div><p>width + height + background</p></div>
+    <div class="cell"><div class="stage-box"><div class="shape rounded"></div></div><p>border-radius: 20px</p></div>
+    <div class="cell"><div class="stage-box"><div class="shape circle"></div></div><p>border-radius: 50%</p></div>
+    <div class="cell"><div class="stage-box"><div class="shape pill"></div></div><p>pill: radius is half the height</p></div>
+    <div class="cell"><div class="stage-box"><div class="shape ellipse"></div></div><p>ellipse: 50% on a non-square</p></div>
+    <div class="cell"><div class="stage-box"><div class="shape half"></div></div><p>half circle: radius on 2 corners</p></div>
+    <div class="cell"><div class="stage-box"><div class="shape quarter"></div></div><p>quarter: radius on 1 corner</p></div>
+    <div class="cell"><div class="stage-box"><div class="shape leaf"></div></div><p>leaf: opposite corners</p></div>
+    <div class="cell"><div class="stage-box"><div class="shape ring"></div></div><p>ring: thick border, no fill</p></div>
+    <div class="cell"><div class="stage-box"><div class="shape triangle"></div></div><p>triangle: borders do the drawing</p></div>
+    <div class="cell"><div class="stage-box"><div class="shape diamond"></div></div><p>diamond: rotate(45deg)</p></div>
+    <div class="cell"><div class="stage-box"><div class="shape gradient"></div></div><p>linear-gradient</p></div>
+    <div class="cell"><div class="stage-box"><div class="shape faded"></div></div><p>opacity: 0.4</p></div>
+    <div class="cell"><div class="stage-box"><div class="shape glass"></div></div><p>rgba background + border</p></div>
+  </div>
+  <div class="phase-title"><p>Hover over any shape.</p></div>
+</div>
+
+<!-- ======================= PHASE 4 ======================= -->
+<div class="phase-title">
+  <h2>Phase 4: shapes become structures</h2>
+  <p>Position the pieces inside a parent. Hover each one.</p>
+</div>
+
+<div class="build">
+
+  <div class="piece">
+    <div class="orbit">
+      <div class="ring-a"></div>
+      <div class="ring-b"></div>
+      <div class="sun"></div>
+      <div class="planet pl-1"></div>
+      <div class="planet pl-2"></div>
+      <div class="planet pl-3"></div>
+    </div>
+    <p>Orbit: rings, a sun and planets</p>
+  </div>
+
+  <div class="piece">
+    <div class="trio">
+      <div class="blob b1"></div>
+      <div class="blob b2"></div>
+      <div class="blob b3"></div>
+    </div>
+    <p>Overlap: rgba circles mix colours</p>
+  </div>
+
+  <div class="piece">
+    <div class="robot">
+      <div class="r-ball"></div>
+      <div class="r-ant"></div>
+      <div class="r-neck"></div>
+      <div class="r-head"></div>
+      <div class="r-ear ear-l"></div>
+      <div class="r-ear ear-r"></div>
+      <div class="r-eye eye-l"></div>
+      <div class="r-eye eye-r"></div>
+      <div class="r-spark spark-l"></div>
+      <div class="r-spark spark-r"></div>
+      <div class="r-cheek cheek-l"></div>
+      <div class="r-cheek cheek-r"></div>
+      <div class="r-mouth"></div>
+    </div>
+    <p>Robot: 13 divs, no images</p>
+  </div>
+
+</div>
+
+<div class="footer">
+  <p>Next challenge: draw your own face, house or logo using only divs.</p>
+</div>
+
+</body>
+</html>
